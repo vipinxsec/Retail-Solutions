@@ -172,6 +172,7 @@ body{
 
     <script src="js/prefixfree.min.js"></script>
 
+<?php include 'pendo-init.php'; ?>
 </head>
 
 <body>
