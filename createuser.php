@@ -985,6 +985,11 @@ echo '</script>';
        echo '<script language="javascript">';
        echo 'alert("Data Saved Successfully")';
        echo '</script>';
+       // Pendo Track Event: user_created
+       $_pendo_props = json_encode(array("designation" => $designation, "department" => $department, "role" => $role, "user_status" => $status, "user_type" => $user_type, "region" => $region, "state" => $state, "city" => $city));
+       echo '<script>';
+       echo 'if (typeof pendo !== "undefined") { pendo.track("user_created", ' . $_pendo_props . '); }';
+       echo '</script>';
     }
 }
 }
@@ -1022,6 +1027,11 @@ if(empty($errors)==true){
  //if($action=="upload"){
 echo '<script language="javascript">';
 echo 'alert("File Uploaded")';
+echo '</script>';
+// Pendo Track Event: user_photo_uploaded
+$_pendo_props = json_encode(array("file_name" => $file_name, "file_extension" => $file_ext, "upload_context" => "create_user"));
+echo '<script>';
+echo 'if (typeof pendo !== "undefined") { pendo.track("user_photo_uploaded", ' . $_pendo_props . '); }';
 echo '</script>';
 //header("location: masterdata.php?action=upload");
       }
@@ -1069,6 +1079,11 @@ echo '</script>';
  //if($action=="upload"){
 echo '<script language="javascript">';
 echo 'alert("File Uploaded")';
+echo '</script>';
+// Pendo Track Event: user_logo_uploaded
+$_pendo_props = json_encode(array("file_name" => $file_name, "file_extension" => $file_ext));
+echo '<script>';
+echo 'if (typeof pendo !== "undefined") { pendo.track("user_logo_uploaded", ' . $_pendo_props . '); }';
 echo '</script>';
 //header("location: masterdata.php?action=upload");
       }

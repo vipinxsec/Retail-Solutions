@@ -587,6 +587,11 @@ if(isset($_POST['fileup'])){
     echo '<script language="javascript">';
     echo 'alert("File Updated Successfully")';
     echo '</script>';
+    // Pendo Track Event: masterdata_file_uploaded (replacement)
+    $_pendo_props = json_encode(array("file_name" => $file_name, "file_extension" => $file_ext, "file_size" => $_FILES['userFile']['size'], "is_replacement" => true));
+    echo '<script>';
+    echo 'if (typeof pendo !== "undefined") { pendo.track("masterdata_file_uploaded", ' . $_pendo_props . '); }';
+    echo '</script>';
 //$name=$_FILES['userFile']['name'];
 //$path=ROOT_DIR."/uploads/uploads_masterdata/".$_FILES['userFile']['name'];
 //unlink($target);
@@ -621,6 +626,11 @@ if(isset($_POST['fileup'])){
  //if($action=="upload"){
 echo '<script language="javascript">';
 echo 'alert("File Uploaded")';
+echo '</script>';
+// Pendo Track Event: masterdata_file_uploaded
+$_pendo_props = json_encode(array("file_name" => $file_name, "file_extension" => $file_ext, "file_size" => $_FILES['userFile']['size'], "is_replacement" => false));
+echo '<script>';
+echo 'if (typeof pendo !== "undefined") { pendo.track("masterdata_file_uploaded", ' . $_pendo_props . '); }';
 echo '</script>';
 //header("location: masterdata.php?action=upload");
       }

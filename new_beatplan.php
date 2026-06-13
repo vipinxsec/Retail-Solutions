@@ -326,6 +326,11 @@ if(!empty($emapData[19])){
         echo '<script type="text/javascript">';
         echo 'alert("CSV File has been successfully Imported")';
         echo '</script>';
+        // Pendo Track Event: beatplan_csv_imported
+        $_pendo_props = json_encode(array("file_name" => $filenm, "file_size" => $_FILES["file"]["size"], "row_count" => $count - 1));
+        echo '<script>';
+        echo 'if (typeof pendo !== "undefined") { pendo.track("beatplan_csv_imported", ' . $_pendo_props . '); }';
+        echo '</script>';
         
     }
     else{

@@ -35,6 +35,10 @@ if($data){
     
     
     $json = array("status" => 1, "msg" =>"Login Successfull!");
+// Pendo Track Event: mobile_app_login_completed
+$_pendo_data = json_encode(array("type" => "track", "event" => "mobile_app_login_completed", "visitorId" => $username, "accountId" => "retail_solutions", "timestamp" => round(microtime(true) * 1000), "properties" => array("username" => $username, "login_status" => "success")));
+$_pendo_ctx = stream_context_create(array("http" => array("method" => "POST", "header" => "Content-Type: application/json\r\nx-pendo-integration-key: 1a661aff-d6a7-48f1-b965-4905746aaca8\r\n", "content" => $_pendo_data, "timeout" => 2)));
+@file_get_contents("https://data.pendo.io/data/track", false, $_pendo_ctx);
 //echo "Login Successfuly";
 }else{
     

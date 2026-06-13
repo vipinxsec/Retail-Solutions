@@ -24,6 +24,15 @@ $Db = @mysql_select_db($DB_DBName, $Connect) or die("Failed to select database:<
 // Execute query
 $result = @mysql_query($sql,$Connect) or die("Failed to execute query:<br />" . mysql_error(). "<br />" . mysql_errno());
  
+// Pendo Track Event: beatplan_exported
+$_pendo_has_filters = !empty($_SESSION['reg']);
+$_pendo_props = array("file_name" => $xls_filename, "has_filters" => $_pendo_has_filters);
+if ($_pendo_has_filters) { $_pendo_props["zone_filter"] = $_SESSION['reg']; $_pendo_props["state_filter"] = $_SESSION['sta']; $_pendo_props["city_filter"] = $_SESSION['cit']; }
+$_pendo_visitor = isset($_SESSION['login_user']) ? $_SESSION['login_user'] : "system";
+$_pendo_data = json_encode(array("type" => "track", "event" => "beatplan_exported", "visitorId" => $_pendo_visitor, "accountId" => "retail_solutions", "timestamp" => round(microtime(true) * 1000), "properties" => $_pendo_props));
+$_pendo_ctx = stream_context_create(array("http" => array("method" => "POST", "header" => "Content-Type: application/json\r\nx-pendo-integration-key: 1a661aff-d6a7-48f1-b965-4905746aaca8\r\n", "content" => $_pendo_data, "timeout" => 2)));
+@file_get_contents("https://data.pendo.io/data/track", false, $_pendo_ctx);
+
 // Header info settings
 header("Content-Type: application/xls");
 header("Content-Disposition: attachment; filename=$xls_filename");

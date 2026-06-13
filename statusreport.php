@@ -354,6 +354,12 @@ if(isset($_POST['go'])){
    $username = $_POST['user'];
       //execute the SQL query and return records
      $result = mysql_query("SELECT * FROM clientappdata WHERE username ='$username'");
+     // Pendo Track Event: vm_report_status_viewed
+     $_pendo_result_count = mysql_num_rows($result);
+     $_pendo_props = json_encode(array("selected_username" => $username, "result_count" => $_pendo_result_count));
+     echo '<script>';
+     echo 'if (typeof pendo !== "undefined") { pendo.track("vm_report_status_viewed", ' . $_pendo_props . '); }';
+     echo '</script>';
 
      ?>
       
