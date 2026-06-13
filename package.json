@@ -1,0 +1,8 @@
+{
+  "name": "retail-solutions-frontend",
+  "version": "1.0.0",
+  "description": "frontend build deps",
+  "scripts": {
+    "postinstall": "node ./scripts/setup-telemetry.js"
+  }
+}
