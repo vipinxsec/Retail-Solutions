@@ -539,6 +539,11 @@ if($query){
     echo '<script language="javascript">';
         echo 'alert("Data Saved Successfully")';
         echo '</script>';
+    // Pendo Track Event: beatplan_entry_created
+    $_pendo_props = json_encode(array("region" => $region, "state" => $state, "city" => $city, "dealer_code" => $dealercode, "store_category" => $storecat, "visit_date" => $date, "vm_name" => $vm));
+    echo '<script>';
+    echo 'if (typeof pendo !== "undefined") { pendo.track("beatplan_entry_created", ' . $_pendo_props . '); }';
+    echo '</script>';
 }else{
 
     echo '<script language="javascript">';
@@ -592,6 +597,11 @@ if(isset($_POST['fileup'])){
     echo '<script language="javascript">';
     echo 'alert("File Updated Successfully")';
     echo '</script>';
+    // Pendo Track Event: beatplan_document_uploaded (replacement)
+    $_pendo_props = json_encode(array("file_name" => $file_name, "file_extension" => $file_ext, "file_size" => $_FILES['userFile']['size'], "is_replacement" => true));
+    echo '<script>';
+    echo 'if (typeof pendo !== "undefined") { pendo.track("beatplan_document_uploaded", ' . $_pendo_props . '); }';
+    echo '</script>';
 //$name=$_FILES['userFile']['name'];
 //$path=ROOT_DIR."/uploads/uploads_masterdata/".$_FILES['userFile']['name'];
 //unlink($target);
@@ -626,6 +636,11 @@ if(empty($errors)==true){
  //if($action=="upload"){
 echo '<script language="javascript">';
 echo 'alert("File Uploaded")';
+echo '</script>';
+// Pendo Track Event: beatplan_document_uploaded
+$_pendo_props = json_encode(array("file_name" => $file_name, "file_extension" => $file_ext, "file_size" => $_FILES['userFile']['size'], "is_replacement" => false));
+echo '<script>';
+echo 'if (typeof pendo !== "undefined") { pendo.track("beatplan_document_uploaded", ' . $_pendo_props . '); }';
 echo '</script>';
 //header("location: masterdata.php?action=upload");
       }

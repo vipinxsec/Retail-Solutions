@@ -361,6 +361,11 @@ $_SESSION['cit'] = $city;
 $_SESSION['count']=1;
 $results = mysql_query("SELECT * FROM uploading_mastexcel WHERE zone='$region' AND state='$state' AND city='$city'");
 $row_value = mysql_num_rows($results);
+// Pendo Track Event: masterdata_filtered
+$_pendo_props = json_encode(array("zone" => $region, "state" => $state, "city" => $city, "result_count" => $row_value));
+echo '<script>';
+echo 'if (typeof pendo !== "undefined") { pendo.track("masterdata_filtered", ' . $_pendo_props . '); }';
+echo '</script>';
 if($row_value==0){
    
     $_SESSION['count']=0;

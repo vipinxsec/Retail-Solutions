@@ -16,6 +16,11 @@ $Db = @mysql_select_db($DB_DBName, $Connect) or die("Failed to select database:<
 // Execute query
 $result = @mysql_query($sql,$Connect) or die("Failed to execute query:<br />" . mysql_error(). "<br />" . mysql_errno());
  
+// Pendo Track Event: status_report_exported
+$_pendo_data = json_encode(array("type" => "track", "event" => "status_report_exported", "visitorId" => "system", "accountId" => "retail_solutions", "timestamp" => round(microtime(true) * 1000), "properties" => array("file_name" => $xls_filename)));
+$_pendo_ctx = stream_context_create(array("http" => array("method" => "POST", "header" => "Content-Type: application/json\r\nx-pendo-integration-key: 1a661aff-d6a7-48f1-b965-4905746aaca8\r\n", "content" => $_pendo_data, "timeout" => 2)));
+@file_get_contents("https://data.pendo.io/data/track", false, $_pendo_ctx);
+
 // Header info settings
 header("Content-Type: application/xls");
 header("Content-Disposition: attachment; filename=$xls_filename");

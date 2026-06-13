@@ -811,6 +811,11 @@ if($query){
     echo '<script language="javascript">';
         echo 'alert("Data Saved Successfully")';
         echo '</script>';
+    // Pendo Track Event: dealer_created
+    $_pendo_props = json_encode(array("dealer_name" => $name, "dealer_code" => $dealer_code, "dealer_type" => $type, "category" => $category, "status" => $status, "zone" => $region, "state" => $state, "city" => $city));
+    echo '<script>';
+    echo 'if (typeof pendo !== "undefined") { pendo.track("dealer_created", ' . $_pendo_props . '); }';
+    echo '</script>';
 }else{
 
     echo '<script language="javascript">';
@@ -862,6 +867,11 @@ if($query){
     echo '<script language="javascript">';
         echo 'alert("Data Saved Successfully")';
         echo '</script>';
+    // Pendo Track Event: contact_person_added
+    $_pendo_props = json_encode(array("contact_name" => $cname, "designation" => $designation));
+    echo '<script>';
+    echo 'if (typeof pendo !== "undefined") { pendo.track("contact_person_added", ' . $_pendo_props . '); }';
+    echo '</script>';
 }else{
 
     echo '<script language="javascript">';

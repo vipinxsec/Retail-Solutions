@@ -221,6 +221,12 @@ $db = mysql_select_db("comm_login", $connection);
 $query = mysql_query("select * from login where password='$password' AND username='$username'", $connection);
 $rows = mysql_num_rows($query);
 if ($rows == 1) {
+$_pendo_role = ($username=="admin") ? "admin" : "user";
+$_pendo_redirect = ($username=="admin") ? "dashboard.php" : "clientapp.php";
+// Pendo Track Event: user_login_completed
+$_pendo_data = json_encode(array("type" => "track", "event" => "user_login_completed", "visitorId" => $username, "accountId" => "retail_solutions", "timestamp" => round(microtime(true) * 1000), "properties" => array("username" => $username, "user_role" => $_pendo_role, "redirect_target" => $_pendo_redirect)));
+$_pendo_ctx = stream_context_create(array("http" => array("method" => "POST", "header" => "Content-Type: application/json\r\nx-pendo-integration-key: 1a661aff-d6a7-48f1-b965-4905746aaca8\r\n", "content" => $_pendo_data, "timeout" => 2)));
+@file_get_contents("https://data.pendo.io/data/track", false, $_pendo_ctx);
 	if($username=="admin"){
 $_SESSION['login_user']=$username;
 header("location: dashboard.php");

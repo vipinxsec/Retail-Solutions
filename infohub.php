@@ -317,6 +317,11 @@ if(empty($errors)==true){
 echo '<script language="javascript">';
 echo 'alert("File Uploaded")';
 echo '</script>';
+// Pendo Track Event: infohub_document_uploaded
+$_pendo_props = json_encode(array("file_name" => $file_name, "file_extension" => $file_ext, "file_size" => $_FILES['pptfile']['size']));
+echo '<script>';
+echo 'if (typeof pendo !== "undefined") { pendo.track("infohub_document_uploaded", ' . $_pendo_props . '); }';
+echo '</script>';
 
       }else{
          //print_r($errors);
@@ -359,6 +364,11 @@ if(empty($errors)==true){
  //if($action=="upload"){
 echo '<script language="javascript">';
 echo 'alert("File Uploaded")';
+echo '</script>';
+// Pendo Track Event: infohub_video_uploaded
+$_pendo_props = json_encode(array("file_name" => $file_name, "file_extension" => $file_ext, "file_size" => $_FILES['vidfile']['size']));
+echo '<script>';
+echo 'if (typeof pendo !== "undefined") { pendo.track("infohub_video_uploaded", ' . $_pendo_props . '); }';
 echo '</script>';
       }
       else{

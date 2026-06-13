@@ -507,6 +507,11 @@ $query = mysql_query("UPDATE `comm_login`.`posm` SET `bunting`='$bunting' , `dan
         echo '<script language="javascript">';
         echo 'alert("Data Updated Successfully")';
         echo '</script>';
+        // Pendo Track Event: posm_stock_updated
+        $_pendo_props = json_encode(array("city" => $city, "bunting_qty" => $bunting, "dangler_qty" => $dangler, "poster_qty" => $poster, "tearpad_qty" => $tearpad, "leafpad_qty" => $leafpad, "brochure_qty" => $brochure, "wobblers_qty" => $wobblers, "tentcard_qty" => $tentcard, "others_qty" => $others));
+        echo '<script>';
+        echo 'if (typeof pendo !== "undefined") { pendo.track("posm_stock_updated", ' . $_pendo_props . '); }';
+        echo '</script>';
       }
 
 

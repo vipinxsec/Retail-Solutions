@@ -1328,6 +1328,11 @@ if($query1 && $query2){
         echo '<script language="javascript">';
         echo 'alert("Data Saved Successfully")';
         echo '</script>';
+        // Pendo Track Event: vm_report_submitted
+        $_pendo_props = json_encode(array("username" => $username, "city" => $city, "location" => $location, "outlet_name" => $outlet, "outlet_category" => $out_cat, "outlet_area" => $area, "deployment_status" => $depst, "image_count" => count($myarray), "bunting_deployed" => $bunting, "dangler_deployed" => $dangler, "poster_deployed" => $poster));
+        echo '<script>';
+        echo 'if (typeof pendo !== "undefined") { pendo.track("vm_report_submitted", ' . $_pendo_props . '); }';
+        echo '</script>';
 }else{
         echo '<script language="javascript">';
         echo 'alert("Error in Storing Data")';
